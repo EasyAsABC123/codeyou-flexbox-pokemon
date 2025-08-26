@@ -1,0 +1,22 @@
+.pokemon-image {
+  width: 100px;
+  height: auto;
+}
+
+.box {
+  display: flex;
+  /* flex-direction: row-reverse; */
+  gap: 10px;
+}
+
+.pokemon-card {
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 250px;
+  text-align: center;
+  background-color: whitesmoke;
+}
+
+body {
+  background-color: seashell;
+}
