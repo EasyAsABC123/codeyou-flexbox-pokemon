@@ -14,6 +14,11 @@ function findPokemonByName(name) {
   return null
 }
 
+function onContactSubmit(event) {
+  event.preventDefault()
+  console.log("we called this function")
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     let element = findPokemonByName('Charmander')
     // create a new div element
@@ -23,5 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // add the text node to the newly created div
     newDiv.appendChild(newContent)
     element.appendChild(newDiv)
+
+    const submit = document.getElementById('contact')
+    submit.addEventListener('submit', onContactSubmit)
 }, false);
 
