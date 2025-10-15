@@ -19,24 +19,25 @@
 //   console.log("we called this function")
 // }
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-    let element = findPokemonByName("Charmander");
-    // create a new div element
-    const newDiv = document.createElement("div");
-    // and give it some content
-    const newContent = document.createTextNode("Hi there and greetings!");
-    // add the text node to the newly created div
-    newDiv.appendChild(newContent);
-    element.appendChild(newDiv);
+// document.addEventListener(
+//   "DOMContentLoaded",
+//   function () {
+//     let element = findPokemonByName("Charmander");
+//     // create a new div element
+//     const newDiv = document.createElement("div");
+//     // and give it some content
+//     const newContent = document.createTextNode("Hi there and greetings!");
+//     // add the text node to the newly created div
+//     newDiv.appendChild(newContent);
+//     element.appendChild(newDiv);
 
-    const submit = document.getElementById("contact");
-    submit.addEventListener("submit", onContactSubmit);
-  },
-  false
-);
+//     const submit = document.getElementById("contact");
+//     submit.addEventListener("submit", onContactSubmit);
+//   },
+//   false
+// );
 
+const ourAPIurl = "http://localhost:3000"
 const pokemonUrl = "https://pokeapi.co/api/v2/pokemon";
 
 function createPokecard(data) {
@@ -65,9 +66,7 @@ function getPokemonList() {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       data.results.forEach((pokemon) => {
-        console.log(pokemon);
         getPokemonInfo(pokemon.url);
       });
     })
@@ -85,9 +84,7 @@ function getPokemonInfo(url) {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
       const pokemonCard = createPokecard(data);
-      console.log(pokemonCard);
 
       const pokemonContainer = document.getElementById("pokemon-container");
       pokemonContainer.innerHTML += pokemonCard;
@@ -97,4 +94,14 @@ function getPokemonInfo(url) {
     });
 }
 
-console.log(getPokemonList());
+async function getWelcomeMessage() {
+  let response = await fetch(`${ourAPIurl}/hello_world`)
+  let welcome_json = await response.json()
+  let welcome_string = welcome_json.text
+  console.log(welcome_string)
+  let header_welcome = document.getElementById("welcome_message")
+  header_welcome.innerText = welcome_string
+}
+
+getPokemonList()
+getWelcomeMessage()
