@@ -37,7 +37,7 @@
 //   false
 // );
 
-const ourAPIurl = "http://localhost:3000";
+const ourAPIurl = "http://localhost:5000";
 const pokemonUrl = "https://pokeapi.co/api/v2/pokemon";
 
 function createPokecard(data) {
@@ -98,6 +98,7 @@ function getPokemonInfo(url) {
       const thumbsUp = document.querySelectorAll(".thumbs-up");
       const thumbsDown = document.querySelectorAll(".thumbs-down");
 
+      // Thumbs up
       thumbsUp.forEach((thumbUp) => {
         thumbUp.addEventListener("click", async (event) => {
           console.log("Thumbs up clicked", event);
@@ -114,9 +115,22 @@ function getPokemonInfo(url) {
           );
         });
       });
+
+      // Thumbs down
       thumbsDown.forEach((thumbDown) => {
-        thumbDown.addEventListener("click", (event) => {
+        thumbDown.addEventListener("click", async (event) => {
           console.log("Thumbs down clicked", event);
+
+          let response = await fetch(
+            `/pokemon/ratings/${event.target.dataset.pokemonId}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ rating: "-" }),
+            }
+          );
         });
       });
     })
