@@ -37,7 +37,7 @@
 //   false
 // );
 
-const ourAPIurl = "http://localhost:3000"
+const ourAPIurl = "http://localhost:3000";
 const pokemonUrl = "https://pokeapi.co/api/v2/pokemon";
 
 function createPokecard(data) {
@@ -52,6 +52,12 @@ function createPokecard(data) {
     <p>Type: ${data.types.map((type) => type.type.name)}</p>
     <p>Height: ${data.height}</p>
     <p>Weight: ${data.weight}</p>
+    <div class="thumbs-container">
+      <div class="thumbs-up" id="thumbs-up" data-pokemon-id=${data.id}>👍</div>
+      <div class="thumbs-down" id="thumbs-down" data-pokemon-id=${
+        data.id
+      }>👎</div>
+    </div>
   </div>`;
 
   return pokemonCard;
@@ -88,6 +94,31 @@ function getPokemonInfo(url) {
 
       const pokemonContainer = document.getElementById("pokemon-container");
       pokemonContainer.innerHTML += pokemonCard;
+
+      const thumbsUp = document.querySelectorAll(".thumbs-up");
+      const thumbsDown = document.querySelectorAll(".thumbs-down");
+
+      thumbsUp.forEach((thumbUp) => {
+        thumbUp.addEventListener("click", async (event) => {
+          console.log("Thumbs up clicked", event);
+
+          let response = await fetch(
+            `/pokemon/ratings/${event.target.dataset.pokemonId}`,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ rating: "+" }),
+            }
+          );
+        });
+      });
+      thumbsDown.forEach((thumbDown) => {
+        thumbDown.addEventListener("click", (event) => {
+          console.log("Thumbs down clicked", event);
+        });
+      });
     })
     .catch((error) => {
       console.error("Fetch error:", error);
@@ -95,13 +126,13 @@ function getPokemonInfo(url) {
 }
 
 async function getWelcomeMessage() {
-  let response = await fetch(`${ourAPIurl}/hello_world`)
-  let welcome_json = await response.json()
-  let welcome_string = welcome_json.text
-  console.log(welcome_string)
-  let header_welcome = document.getElementById("welcome_message")
-  header_welcome.innerText = welcome_string
+  let response = await fetch(`${ourAPIurl}/hello_world`);
+  let welcome_json = await response.json();
+  let welcome_string = welcome_json.text;
+  console.log(welcome_string);
+  let header_welcome = document.getElementById("welcome_message");
+  header_welcome.innerText = welcome_string;
 }
 
-getPokemonList()
-getWelcomeMessage()
+getPokemonList();
+getWelcomeMessage();

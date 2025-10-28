@@ -21,3 +21,8 @@
 body {
   background-color: seashell;
 }
+
+.thumbs-container {
+  display: flex;
+  justify-content: center;
+}
