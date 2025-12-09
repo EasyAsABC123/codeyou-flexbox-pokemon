@@ -47,7 +47,8 @@ function createPokecard(data) {
     <img
       class="pokemon-image"
       alt="${data.name}"
-      src= "${data.sprites.front_default}"
+      src="${data.sprites.front_default}"
+      crossorigin="anonymous"
     />
     <p>Type: ${data.types.map((type) => type.type.name)}</p>
     <p>Height: ${data.height}</p>
